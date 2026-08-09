@@ -1,0 +1,2260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoInsight Analytics - Data-Driven Location Strategy for Local Businesses</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1A2A46 0%, #2C4A7D 100%);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .main-content {
+            flex: 2;
+            background: #fff;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .demo-panel {
+            flex: 1;
+            background: #f8f9fa;
+            border-left: 3px solid #B3242B;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1A2A46 0%, #2C4A7D 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #B3242B;
+        }
+
+        .admin-trigger {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 42, 70, 0.95), rgba(44, 74, 125, 0.95)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            background-size: cover;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #e0e6ed;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #B3242B, #D63841);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(179, 36, 43, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(179, 36, 43, 0.4);
+        }
+
+        .cta-teaser {
+            margin: 2rem auto 2rem auto;
+            max-width: 600px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e6ed;
+            text-align: center;
+        }
+
+        .cta-teaser p {
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-teaser strong {
+            color: white;
+            font-size: 1.15rem;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #1A2A46;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #B3242B;
+        }
+
+        .card.demo-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+        }
+
+        .card.demo-card.active {
+            border-color: #B3242B;
+            background: linear-gradient(135deg, #fff5f5, #ffffff);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: #B3242B;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            color: #1A2A46;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #3F4754;
+            line-height: 1.6;
+        }
+
+        /* Demo Panel Styles */
+        .demo-header {
+            background: #1A2A46;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .demo-content {
+            height: calc(100% - 60px);
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .demo-dashboard {
+            display: none;
+            height: 100%;
+        }
+
+        .demo-dashboard.active {
+            display: block;
+        }
+
+        .dashboard-widget {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .widget-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1A2A46;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1976d2;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #B3242B;
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7b1fa2;
+            margin-top: 1rem;
+        }
+
+        .revenue-chart, .seasonal-chart {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .chart-title {
+            font-weight: 600;
+            color: #1A2A46;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .chart-bars, .seasonal-bars {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 100px;
+            gap: 0.5rem;
+        }
+
+        .chart-bar, .season-bar {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .chart-bar {
+            background: linear-gradient(to top, #B3242B, #D63841);
+            border-radius: 4px 4px 0 0;
+            min-height: 20px;
+            position: relative;
+        }
+
+        .season-fill {
+            width: 100%;
+            border-radius: 4px 4px 0 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.7rem;
+            padding-bottom: 0.2rem;
+        }
+
+        .bar-label, .season-name {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.3rem;
+            font-weight: 500;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1A2A46;
+        }
+
+        /* Professional Dashboard Styles */
+        .dashboard-kpi-header {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, #fff, #f8f9fa);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .kpi-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .kpi-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1A2A46;
+            margin-bottom: 0.3rem;
+        }
+
+        .kpi-change {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .kpi-change.positive {
+            color: #28a745;
+        }
+
+        .kpi-score {
+            font-size: 0.9rem;
+            color: #B3242B;
+            font-weight: 600;
+        }
+
+        .dashboard-main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            min-height: 400px;
+        }
+
+        .map-widget {
+            min-height: 450px;
+        }
+
+        .professional-map {
+            position: relative;
+            height: 350px;
+            background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .map-controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+            display: flex;
+            gap: 5px;
+        }
+
+        .map-btn {
+            background: rgba(26, 42, 70, 0.9);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .map-btn.active,
+        .map-btn:hover {
+            background: #B3242B;
+        }
+
+        .map-canvas {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 55% 25%, rgba(179, 36, 43, 0.3) 0%, transparent 25%),
+                radial-gradient(circle at 35% 45%, rgba(179, 36, 43, 0.2) 0%, transparent 20%),
+                radial-gradient(circle at 60% 65%, rgba(179, 36, 43, 0.25) 0%, transparent 22%),
+                linear-gradient(135deg, #e3f2fd, #f8f9fa);
+        }
+
+        .map-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #B3242B;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 5;
+        }
+
+        .map-marker::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 14px;
+            height: 14px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .map-marker:hover {
+            transform: rotate(-45deg) scale(1.2);
+        }
+
+        .map-marker.high-value {
+            background: #28a745;
+        }
+
+        .map-marker.medium-value {
+            background: #ffc107;
+        }
+
+        .marker-popup {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            background: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-size: 0.7rem;
+            min-width: 140px;
+            display: none;
+            z-index: 10;
+            line-height: 1.3;
+        }
+
+        .map-marker:hover .marker-popup {
+            display: block;
+        }
+
+        .current-location {
+            position: absolute;
+            background: #1A2A46;
+            color: white;
+            padding: 0.3rem 0.6rem;
+        }
+
+        .rankings-widget {
+            min-height: 450px;
+            max-height: none;
+            overflow-y: auto;
+        }
+
+        .zone-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .zone-details {
+            margin-bottom: 0.8rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.3rem 0;
+            font-size: 0.8rem;
+            border-bottom: 1px solid #f1f3f4;
+            line-height: 1.2;
+            word-wrap: break-word;
+        }
+
+        .detail-row .value {
+            max-width: 60%;
+            text-align: right;
+            word-wrap: break-word;
+        }
+
+        .zone-name {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1A2A46;
+            margin-bottom: 0.5rem;
+        }
+
+        .zone-score {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #B3242B;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 1200px) {
+            .dashboard-main-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .professional-map {
+                height: 300px;
+            }
+            
+            .map-widget,
+            .rankings-widget {
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-kpi-header {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+            
+            .kpi-card {
+                padding: 1rem;
+            }
+            
+            .kpi-value {
+                font-size: 1.4rem;
+            }
+            
+            .zone-item {
+                padding: 0.8rem;
+            }
+            
+            .detail-row {
+                font-size: 0.8rem;
+                flex-wrap: wrap;
+            }
+        }
+
+                /* Enhanced responsive fixes for demo panel */
+        @media (max-width: 1400px) {
+            .dashboard-main-content {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .detail-row {
+                font-size: 0.75rem;
+                padding: 0.2rem 0;
+            }
+            
+            .zone-name {
+                font-size: 0.9rem;
+            }
+            
+            .zone-score {
+                font-size: 1rem;
+            }
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: #1A2A46;
+            color: white;
+            transition: right 0.3s;
+            z-index: 2000;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+        }
+
+        .admin-panel.active {
+            right: 0;
+        }
+
+        .admin-header {
+            padding: 2rem;
+            background: #2C4A7D;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .admin-content {
+            padding: 2rem;
+            height: calc(100% - 100px);
+            overflow-y: auto;
+        }
+
+        .admin-section {
+            margin-bottom: 2rem;
+        }
+
+        .admin-section h3 {
+            margin-bottom: 1rem;
+            color: #B3242B;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background: #2C4A7D;
+            color: white;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .admin-button {
+            background: #B3242B;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .admin-button:hover {
+            background: #8B1E23;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-form .form-group input,
+        .contact-form .form-group textarea {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e9ecef;
+        }
+
+        .contact-form .form-group input:focus,
+        .contact-form .form-group textarea:focus {
+            border-color: #B3242B;
+            outline: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .main-content {
+                flex: 1;
+            }
+            
+            .demo-panel {
+                display: none;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .admin-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="header">
+                <div class="nav-container">
+                    <div class="logo">
+                        <img src="logo.png" alt="MarketMap Analytics" onerror="this.style.display='none'">
+                        MarketMap Analytics
+                    </div>
+                    <nav>
+                        <ul class="nav-menu">
+                            <li><a href="#" onclick="showSection('home')" class="nav-link active">Home</a></li>
+                            <li><a href="#" onclick="showSection('about')" class="nav-link">About</a></li>
+                            <li><a href="#" onclick="showSection('services')" class="nav-link">Services</a></li>
+                            <li><a href="#" onclick="showSection('demo')" class="nav-link">Demo</a></li>
+                            <li><a href="#" onclick="showSection('contact')" class="nav-link">Contact</a></li>
+                            <li><button class="admin-trigger" onclick="toggleAdmin()"><i class="fas fa-cog"></i></button></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- Home Section -->
+            <section id="home" class="content-section active">
+                <div class="hero">
+                    <h1>MarketMap Analytics</h1>
+                    <p class="tagline">Data-Driven Location Strategy for Local Businesses</p>
+                    <p class="subtitle">Transform your CRM data into powerful geographic insights. We help small businesses make smarter location decisions through interactive mapping, demographic analysis, and competitor intelligence.</p>
+                    <div class="cta-teaser">
+                        <p><strong>Curious what growth opportunities are hiding in your data?</strong></p>
+                        <p>Let's create a road<em style="color: #B3242B; font-weight: bold;">MAP</em> to the hidden gems together.</p>
+                    </div>
+                    <a href="#" onclick="showSection('contact')" class="cta-button">Book a Consultation</a>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="content-section">
+                <h2 class="section-title">About MarketMap Analytics</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-map-marked-alt"></i></div>
+                        <h3>Location Intelligence</h3>
+                        <p>We specialize in transforming your existing CRM data into powerful geographic insights that drive business growth and strategic decision-making.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-users"></i></div>
+                        <h3>Small Business Focus</h3>
+                        <p>Tailored specifically for small businesses, our solutions integrate seamlessly with popular CRMs like Square, Shopify, and HubSpot.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>Data-Driven Results</h3>
+                        <p>Our analytics provide actionable insights for customer targeting, expansion planning, and competitive positioning in your market.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="content-section">
+                <h2 class="section-title">Our Services</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-map"></i></div>
+                        <h3>Interactive Customer Maps</h3>
+                        <p>Visualize customer density and distribution patterns with dynamic, interactive maps that reveal hidden opportunities in your market area.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-dollar-sign"></i></div>
+                        <h3>Demographic Targeting</h3>
+                        <p>Overlay income levels and demographic data to identify high-value customer segments and optimize your marketing efforts.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+                        <h3>Expansion Zone Analysis</h3>
+                        <p>Discover optimal locations for business expansion based on revenue clustering, demographic fit, and market opportunity analysis.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon"><i class="fas fa-search"></i></div>
+                        <h3>Competitor Intelligence</h3>
+                        <p>Analyze competitor locations and market positioning using comprehensive public data sources and location intelligence.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Demo Section -->
+            <section id="demo" class="content-section">
+                <h2 class="section-title">Interactive Demo</h2>
+                <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: #3F4754;">
+                    Click on any industry below to see a live demo of our analytics dashboard
+                </p>
+                <div class="cards-grid">
+                    <div class="card demo-card" onclick="showDemo('landscaping')">
+                        <div class="card-icon"><i class="fas fa-seedling"></i></div>
+                        <h3>Landscaping Services</h3>
+                        <p>Seasonal demand mapping, property value correlation, and service area optimization for landscaping businesses.</p>
+                    </div>
+                    <div class="card demo-card" onclick="showDemo('hvac')">
+                        <div class="card-icon"><i class="fas fa-thermometer-half"></i></div>
+                        <h3>HVAC Services</h3>
+                        <p>Climate zone analysis, emergency service mapping, and residential density targeting for HVAC companies.</p>
+                    </div>
+                    <div class="card demo-card" onclick="showDemo('coffee')">
+                        <div class="card-icon"><i class="fas fa-coffee"></i></div>
+                        <h3>Coffee Shop</h3>
+                        <p>Foot traffic analysis, competitor proximity mapping, and demographic targeting for retail coffee locations.</p>
+                    </div>
+                    <div class="card demo-card" onclick="showDemo('sports')">
+                        <div class="card-icon"><i class="fas fa-futbol"></i></div>
+                        <h3>Youth Sports</h3>
+                        <p>Family demographic targeting, facility accessibility analysis, and program expansion opportunities.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="content-section">
+                <h2 class="section-title">Get Started Today</h2>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="business">Business Name</label>
+                            <input type="text" id="business" name="business" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="crm">Current CRM System</label>
+                            <input type="text" id="crm" name="crm" placeholder="e.g., Square, Shopify, HubSpot">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Tell us about your location challenges</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%;">Schedule Free Consultation</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- Demo Panel -->
+        <div class="demo-panel">
+            <div class="demo-header">
+                <span id="demoTitle">Select an industry to see demo</span>
+            </div>
+            <div class="demo-content">
+                <!-- Default Demo -->
+                <div id="demo-default" class="demo-dashboard active">
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #3F4754; text-align: center;">
+                        <div>
+                            <i class="fas fa-mouse-pointer" style="font-size: 3rem; margin-bottom: 1rem; color: #B3242B;"></i>
+                            <h3>Interactive Demo</h3>
+                            <p>Click on any industry card to see a customized analytics dashboard</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Landscaping Demo -->
+                <div id="demo-landscaping" class="demo-dashboard">
+                    <div class="dashboard-widget">
+                        <div class="widget-title">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Customer Distribution Map
+                        </div>
+                        <div class="professional-map">
+                            <div class="map-controls">
+                                <button class="map-btn active">Customer Density</button>
+                                <button class="map-btn">Property Values</button>
+                                <button class="map-btn">Seasonal Demand</button>
+                            </div>
+                            <div class="map-canvas">
+                                <div class="map-marker high-value" style="top: 30%; left: 45%;">
+                                    <div class="marker-popup">
+                                        <strong>Mandarin Area</strong><br>
+                                        Score: 88.4/100<br>
+                                        Properties: 890<br>
+                                        Avg Value: $285K
+                                    </div>
+                                </div>
+                                <div class="map-marker medium-value" style="top: 50%; left: 65%;">
+                                    <div class="marker-popup">
+                                        <strong>Ponte Vedra</strong><br>
+                                        Score: 82.1/100<br>
+                                        High-end properties<br>
+                                        Premium services
+                                    </div>
+                                </div>
+                                <div class="map-marker medium-value" style="top: 65%; left: 40%;">
+                                    <div class="marker-popup">
+                                        <strong>Orange Park</strong><br>
+                                        Score: 76.8/100<br>
+                                        Growing market<br>
+                                        New developments
+                                    </div>
+                                </div>
+                                <div class="current-location" style="top: 45%; left: 55%;">Current Service Area</div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Active Customers</span>
+                            <span class="metric-value">1,247</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Service Radius</span>
+                            <span class="metric-value">15 miles</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Peak Season</span>
+                            <span class="metric-value">Spring/Summer</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-widget">
+                        <div class="widget-title">
+                            <i class="fas fa-dollar-sign"></i>
+                            Revenue by ZIP Code
+                        </div>
+                        <div class="revenue-chart">
+                            <div class="chart-title">Monthly Revenue Trends</div>
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 60%;">
+                                    <div class="bar-label">Mar</div>
+                                    <div class="bar-value">$28K</div>
+                                </div>
+                                <div class="chart-bar" style="height: 85%;">
+                                    <div class="bar-label">Apr</div>
+                                    <div class="bar-value">$42K</div>
+                                </div>
+                                <div class="chart-bar" style="height: 100%;">
+                                    <div class="bar-label">May</div>
+                                    <div class="bar-value">$51K</div>
+                                </div>
+                                <div class="chart-bar" style="height: 95%;">
+                                    <div class="bar-label">Jun</div>
+                                    <div class="bar-value">$48K</div>
+                                </div>
+                                <div class="chart-bar" style="height: 75%;">
+                                    <div class="bar-label">Jul</div>
+                                    <div class="bar-value">$36K</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Top ZIP: 32224</span>
+                            <span class="metric-value">$125K</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Growth Area: 32256</span>
+                            <span class="metric-value">+23%</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-widget">
+                        <div class="widget-title">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                            Expansion Opportunities
+                        </div>
+                        <div class="metric-row">
+                            <span>High-Income Area</span>
+                            <span class="metric-value">32082</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Low Competition</span>
+                            <span class="metric-value">32259</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Growth Potential</span>
+                            <span class="metric-value">High</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HVAC Demo -->
+                <div id="demo-hvac" class="demo-dashboard">
+                    <div class="dashboard-widget">
+                        <div class="widget-title">
+                            <i class="fas fa-thermometer-half"></i>
+                            Service Call Heat Map
+                        </div>
+                        <div class="professional-map">
+                            <div class="map-controls">
+                                <button class="map-btn active">Service Calls</button>
+                                <button class="map-btn">Home Age</button>
+                                <button class="map-btn">Emergency Zones</button>
+                            </div>
+                            <div class="map-canvas">
+                                <div class="map-marker high-value" style="top: 25%; left: 60%;">
+                                    <div class="marker-popup">
+                                        <strong>Beaches Area</strong><br>
+                                        Emergency Calls: 23<br>
+                                        Avg Home Age: 25 years<br>
+                                        AC Replacement Market
+                                    </div>
+                                </div>
+                                <div class="map-marker medium-value" style="top: 45%; left: 35%;">
+                                    <div class="marker-popup">
+                                        <strong>Westside</strong><br>
+                                        Service Calls: 18<br>
+                                        Growing neighborhood<br>
+                                        Maintenance contracts
+                                    </div>
+                                </div>
+                                <div class="map-marker high-value" style="top: 60%; left: 55%;">
+                                    <div class="marker-popup">
+                                        <strong>Southside</strong><br>
+                                        Emergency Priority<br>
+                                        15 min response time<br>
+                                        High-value customers
+                                    </div>
+                                </div>
+                                <div class="current-location" style="top: 50%; left: 50%;">Service Hub</div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Emergency Calls</span>
+                            <span class="metric-value">89 this month</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Response Time</span>
+                            <span class="metric-value">45 minutes</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-widget">
+                        <div class="widget-title">
+                            <i class="fas fa-home"></i>
+                            Residential Analysis
+                        </div>
+                        <div class="metric-row">
+                            <span>Home Age (20+ years)</span>
+                            <span class="metric-value">67%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>AC Replacement Market</span>
+                            <span class="metric-value">2,340 homes</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Avg. Income</span>
+                            <span class="metric-value">$68K</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-widget">
+                        <div class="widget-title">
+                            <i class="fas fa-chart-line"></i>
+                            Seasonal Trends
+                        </div>
+                        <div class="seasonal-chart">
+                            <div class="chart-title">Service Call Volume</div>
+                            <div class="seasonal-bars">
+                                <div class="season-bar">
+                                    <div class="season-name">Winter</div>
+                                    <div class="season-fill" style="height: 45%; background: #4fc3f7;">45</div>
+                                </div>
+                                <div class="season-bar">
+                                    <div class="season-name">Spring</div>
+                                    <div class="season-fill" style="height: 70%; background: #81c784;">70</div>
+                                </div>
+                                <div class="season-bar">
+                                    <div class="season-name">Summer</div>
+                                    <div class="season-fill" style="height: 100%; background: #e57373;">124</div>
+                                </div>
+                                <div class="season-bar">
+                                    <div class="season-name">Fall</div>
+                                    <div class="season-fill" style="height: 35%; background: #ffb74d;">35</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="metric-row">
+                            <span>Peak Months</span>
+                            <span class="metric-value">Jun-Aug</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coffee Shop Demo -->
+                <div id="demo-coffee" class="demo-dashboard">
+                    <!-- KPI Header -->
+                    <div class="dashboard-kpi-header">
+                        <div class="kpi-card">
+                            <div class="kpi-label">Daily Customers</div>
+                            <div class="kpi-value">340</div>
+                            <div class="kpi-change positive">↗ +18.5%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">Avg Transaction</div>
+                            <div class="kpi-value">$8.50</div>
+                            <div class="kpi-change positive">↗ +4.2%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">Top Location</div>
+                            <div class="kpi-value">Town Center</div>
+                            <div class="kpi-score">91.7/100</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">Expansion Revenue</div>
+                            <div class="kpi-value">$312,000</div>
+                            <div class="kpi-change positive">Annual</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Area -->
+                    <div class="dashboard-main-content">
+                        <!-- Map Section -->
+                        <div class="dashboard-widget map-widget">
+                            <div class="widget-title">
+                                <i class="fas fa-walking"></i>
+                                Location Intelligence Map
+                            </div>
+                            <div class="professional-map">
+                                <div class="map-controls">
+                                    <button class="map-btn active">Foot Traffic</button>
+                                    <button class="map-btn">Demographics</button>
+                                    <button class="map-btn">Competition</button>
+                                </div>
+                                <div class="map-canvas">
+                                    <div class="map-marker high-value" style="top: 25%; left: 55%;">
+                                        <div class="marker-popup">
+                                            <strong>Town Center Plaza</strong><br>
+                                            Score: 91.7/100<br>
+                                            Traffic: 1,200/day<br>
+                                            Revenue Potential: $312K
+                                        </div>
+                                    </div>
+                                    <div class="map-marker medium-value" style="top: 45%; left: 35%;">
+                                        <div class="marker-popup">
+                                            <strong>University District</strong><br>
+                                            Score: 85.3/100<br>
+                                            Traffic: 950/day<br>
+                                            Revenue Potential: $268K
+                                        </div>
+                                    </div>
+                                    <div class="map-marker medium-value" style="top: 65%; left: 60%;">
+                                        <div class="marker-popup">
+                                            <strong>Riverside Arts</strong><br>
+                                            Score: 72.1/100<br>
+                                            Weekend peak location<br>
+                                            Revenue Potential: $195K
+                                        </div>
+                                    </div>
+                                    <div class="current-location" style="top: 55%; left: 45%;">Current Store</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Zone Rankings -->
+                        <div class="dashboard-widget rankings-widget">
+                            <div class="widget-title">
+                                <i class="fas fa-chart-bar"></i>
+                                Expansion Opportunities
+                            </div>
+                            <div class="zone-ranking">
+                                <div class="zone-item top-zone">
+                                    <div class="zone-name">Town Center Plaza</div>
+                                    <div class="zone-score">91.7/100</div>
+                                    <div class="zone-details">
+                                        <div class="detail-row">Revenue Potential: <span class="value">$312,480/year</span></div>
+                                        <div class="detail-row">ROI Category: <span class="value high-roi">High</span></div>
+                                        <div class="detail-row">Daily Traffic: <span class="value">1,200 people</span></div>
+                                        <div class="detail-row">Competition: <span class="value low-comp">0.8 mi to nearest</span></div>
+                                    </div>
+                                    <div class="score-bar">
+                                        <div class="score-fill" style="width: 91.7%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="zone-item">
+                                    <div class="zone-name">University District</div>
+                                    <div class="zone-score">85.3/100</div>
+                                    <div class="zone-details">
+                                        <div class="detail-row">Revenue Potential: <span class="value">$268,900/year</span></div>
+                                        <div class="detail-row">ROI Category: <span class="value high-roi">High</span></div>
+                                        <div class="detail-row">Target Demo: <span class="value">82% match</span></div>
+                                    </div>
+                                    <div class="score-bar">
+                                        <div class="score-fill" style="width: 85.3%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="zone-item">
+                                    <div class="zone-name">Riverside Arts District</div>
+                                    <div class="zone-score">72.1/100</div>
+                                    <div class="zone-details">
+                                        <div class="detail-row">Revenue Potential: <span class="value">$195,650/year</span></div>
+                                        <div class="detail-row">ROI Category: <span class="value med-roi">Medium</span></div>
+                                        <div class="detail-row">Weekend Peak: <span class="value">+45% traffic</span></div>
+                                    </div>
+                                    <div class="score-bar">
+                                        <div class="score-fill" style="width: 72.1%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Youth Sports Demo -->
+                <div id="demo-sports" class="demo-dashboard">
+                    <!-- KPI Header -->
+                    <div class="dashboard-kpi-header">
+                        <div class="kpi-card">
+                            <div class="kpi-label">Youth Population</div>
+                            <div class="kpi-value">8,420</div>
+                            <div class="kpi-change positive">↗ +5.2%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">Participation Rate</div>
+                            <div class="kpi-value">34%</div>
+                            <div class="kpi-change positive">↗ +2.1%</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">Top Facility Site</div>
+                            <div class="kpi-value">Ponte Vedra</div>
+                            <div class="kpi-score">94.2/100</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-label">Revenue Potential</div>
+                            <div class="kpi-value">$425,000</div>
+                            <div class="kpi-change positive">Annual</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Content Area -->
+                    <div class="dashboard-main-content">
+                        <!-- Map Section -->
+                        <div class="dashboard-widget map-widget">
+                            <div class="widget-title">
+                                <i class="fas fa-child"></i>
+                                Family Demographics & Facility Analysis
+                            </div>
+                            <div class="professional-map">
+                                <div class="map-controls">
+                                    <button class="map-btn active">Youth Density</button>
+                                    <button class="map-btn">Income Levels</button>
+                                    <button class="map-btn">Accessibility</button>
+                                </div>
+                                <div class="map-canvas">
+                                    <div class="map-marker high-value" style="top: 20%; left: 65%;">
+                                        <div class="marker-popup">
+                                            <strong>Ponte Vedra</strong><br>
+                                            Score: 94.2/100<br>
+                                            Youth Pop: 1,240 (ages 6-16)<br>
+                                            Revenue: $425K potential
+                                        </div>
+                                    </div>
+                                    <div class="map-marker medium-value" style="top: 35%; left: 40%;">
+                                        <div class="marker-popup">
+                                            <strong>Mandarin</strong><br>
+                                            Score: 87.8/100<br>
+                                            Youth Pop: 1,890<br>
+                                            Revenue: $315K potential
+                                        </div>
+                                    </div>
+                                    <div class="map-marker medium-value" style="top: 60%; left: 55%;">
+                                        <div class="marker-popup">
+                                            <strong>Orange Park</strong><br>
+                                            Score: 79.3/100<br>
+                                            Youth Pop: 2,120<br>
+                                            Revenue: $285K potential
+                                        </div>
+                                    </div>
+                                    <div class="current-location" style="top: 45%; left: 50%;">Current Facility</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Zone Rankings -->
+                        <div class="dashboard-widget rankings-widget">
+                            <div class="widget-title">
+                                <i class="fas fa-trophy"></i>
+                                Facility Expansion Analysis
+                            </div>
+                            <div class="zone-ranking">
+                                <div class="zone-item top-zone">
+                                    <div class="zone-name">Ponte Vedra Beach Area</div>
+                                    <div class="zone-score">94.2/100</div>
+                                    <div class="zone-details">
+                                        <div class="detail-row">Revenue Potential: <span class="value">$425,000/year</span></div>
+                                        <div class="detail-row">ROI Category: <span class="value high-roi">High</span></div>
+                                        <div class="detail-row">Youth Population: <span class="value">1,240 (ages 6-16)</span></div>
+                                        <div class="detail-row">Avg Family Income: <span class="value">$95K</span></div>
+                                        <div class="detail-row">Competition: <span class="value low-comp">1 facility (5.2 mi)</span></div>
+                                    </div>
+                                    <div class="score-bar">
+                                        <div class="score-fill" style="width: 94.2%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="zone-item">
+                                    <div class="zone-name">Mandarin</div>
+                                    <div class="zone-score">87.8/100</div>
+                                    <div class="zone-details">
+                                        <div class="detail-row">Revenue Potential: <span class="value">$315,200/year</span></div>
+                                        <div class="detail-row">ROI Category: <span class="value high-roi">High</span></div>
+                                        <div class="detail-row">Youth Population: <span class="value">1,890</span></div>
+                                        <div class="detail-row">Soccer Interest: <span class="value">Very High</span></div>
+                                    </div>
+                                    <div class="score-bar">
+                                        <div class="score-fill" style="width: 87.8%"></div>
+                                    </div>
+                                </div>
+
+                                <div class="zone-item">
+                                    <div class="zone-name">Orange Park</div>
+                                    <div class="zone-score">79.3/100</div>
+                                    <div class="zone-details">
+                                        <div class="detail-row">Revenue Potential: <span class="value">$285,650/year</span></div>
+                                        <div class="detail-row">ROI Category: <span class="value med-roi">Medium</span></div>
+                                        <div class="detail-row">Youth Population: <span class="value">2,120</span></div>
+                                        <div class="detail-row">Baseball Gap: <span class="value">Underserved</span></div>
+                                    </div>
+                                    <div class="score-bar">
+                                        <div class="score-fill" style="width: 79.3%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h3>Administrator Panel</h3>
+            <button class="admin-close" onclick="toggleAdmin()">×</button>
+        </div>
+        <div class="admin-content">
+            <!-- Admin Login Form -->
+            <div class="admin-login" id="adminLogin">
+                <h3 style="text-align: center; margin-bottom: 2rem; color: #B3242B;">Admin Login</h3>
+                <div class="form-group">
+                    <label for="adminUsername">Username:</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password:</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <div style="text-align: center;">
+                    <button class="admin-button" onclick="loginAdmin()">Login</button>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard (hidden by default) -->
+            <div id="adminDashboard" style="display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h3 style="color: #B3242B;">Content Management Dashboard</h3>
+                    <button class="admin-button" onclick="logoutAdmin()" style="background: #dc3545;">Logout</button>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Content Management</h3>
+                    <div class="form-group">
+                        <label for="heroTitle">Hero Title</label>
+                        <input type="text" id="heroTitle" value="GeoInsight Analytics">
+                    </div>
+                    <div class="form-group">
+                        <label for="heroTagline">Tagline</label>
+                        <input type="text" id="heroTagline" value="Data-Driven Location Strategy for Local Businesses">
+                    </div>
+                    <div class="form-group">
+                        <label for="heroSubtitle">Hero Subtitle</label>
+                        <textarea id="heroSubtitle">Transform your CRM data into powerful geographic insights. We help small businesses make smarter location decisions through interactive mapping, demographic analysis, and competitor intelligence.</textarea>
+                    </div>
+                    <button class="admin-button" onclick="updateHeroContent()">Update Hero Section</button>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Service Cards</h3>
+                    <div class="form-group">
+                        <label for="serviceTitle">Service Title</label>
+                        <input type="text" id="serviceTitle" placeholder="Enter service title">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceIcon">Service Icon (Font Awesome class)</label>
+                        <input type="text" id="serviceIcon" placeholder="e.g., fas fa-map">
+                    </div>
+                    <div class="form-group">
+                        <label for="serviceDescription">Service Description</label>
+                        <textarea id="serviceDescription" placeholder="Enter service description"></textarea>
+                    </div>
+                    <button class="admin-button" onclick="addServiceCard()">Add Service Card</button>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Demo Industries</h3>
+                    <div class="form-group">
+                        <label for="industryName">Industry Name</label>
+                        <input type="text" id="industryName" placeholder="e.g., Restaurant">
+                    </div>
+                    <div class="form-group">
+                        <label for="industryIcon">Industry Icon</label>
+                        <input type="text" id="industryIcon" placeholder="e.g., fas fa-utensils">
+                    </div>
+                    <div class="form-group">
+                        <label for="industryDescription">Industry Description</label>
+                        <textarea id="industryDescription" placeholder="Describe the industry use case"></textarea>
+                    </div>
+                    <button class="admin-button" onclick="addIndustryDemo()">Add Industry Demo</button>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Analytics Settings</h3>
+                    <div class="form-group">
+                        <label for="googleAnalytics">Google Analytics ID</label>
+                        <input type="text" id="googleAnalytics" placeholder="GA-XXXXXXXX-X">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailIntegration">Email Integration</label>
+                        <input type="text" id="emailIntegration" placeholder="integration@example.com">
+                    </div>
+                    <button class="admin-button" onclick="updateSettings()">Save Settings</button>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Contact Submissions</h3>
+                    <div id="contactSubmissions" style="max-height: 200px; overflow-y: auto; background: #2C4A7D; padding: 1rem; border-radius: 5px;">
+                        <p style="color: #ccc;">No submissions yet</p>
+                    </div>
+                    <button class="admin-button" onclick="exportContacts()">Export Contacts</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // REPLACE THE ENTIRE SCRIPT SECTION WITH THIS CLEANED UP VERSION:
+
+        // Global state management
+        let currentSection = 'home';
+        let currentDemo = 'default';
+        let contactSubmissions = [];
+        let adminSettings = {
+            heroTitle: 'GeoInsight Analytics',
+            heroTagline: 'Data-Driven Location Strategy for Local Businesses',
+            heroSubtitle: 'Transform your CRM data into powerful geographic insights. We help small businesses make smarter location decisions through interactive mapping, demographic analysis, and competitor intelligence.',
+            googleAnalytics: '',
+            emailIntegration: ''
+        };
+
+        // Admin authentication variables
+        let isAdminLoggedIn = false;
+        const adminCredentials = {
+            username: 'admin',
+            password: 'geoinsight2024'
+        };
+
+        // Navigation functionality
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show target section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentSection = sectionId;
+        }
+
+        // Demo functionality (enhanced with tracking)
+        function showDemo(industry) {
+            // Update demo cards
+            document.querySelectorAll('.demo-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Hide all demo dashboards
+            document.querySelectorAll('.demo-dashboard').forEach(dashboard => {
+                dashboard.classList.remove('active');
+            });
+            
+            // Show selected demo
+            document.getElementById(`demo-${industry}`).classList.add('active');
+            
+            // Update demo title
+            const industryNames = {
+                'landscaping': 'Landscaping Services Dashboard',
+                'hvac': 'HVAC Services Dashboard',
+                'coffee': 'Coffee Shop Dashboard',
+                'sports': 'Youth Sports Dashboard'
+            };
+            
+            document.getElementById('demoTitle').textContent = industryNames[industry] || 'Demo Dashboard';
+            currentDemo = industry;
+            
+            // Track interaction
+            let interactions = parseInt(localStorage.getItem('demoInteractions') || '0');
+            interactions++;
+            localStorage.setItem('demoInteractions', interactions.toString());
+            
+            // Update admin display if exists
+            const counter = document.getElementById('demoInteractions');
+            if (counter) counter.textContent = interactions;
+        }
+
+        // Admin panel functionality
+        
+        function toggleAdmin() {
+            const adminPanel = document.getElementById('adminPanel');
+            adminPanel.classList.toggle('active');
+            
+            // Reset to login view when opening admin panel if not logged in
+            if (adminPanel.classList.contains('active') && !isAdminLoggedIn) {
+                showAdminLogin();
+            }
+        }
+
+        function showAdminLogin() {
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function showAdminDashboard() {
+            document.getElementById('adminLogin').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+        }
+
+        function loginAdmin() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (username === adminCredentials.username && password === adminCredentials.password) {
+                isAdminLoggedIn = true;
+                showAdminDashboard();
+                alert('Welcome, Admin! You now have access to the content management system.');
+                
+                // Clear login form
+                document.getElementById('adminUsername').value = '';
+                document.getElementById('adminPassword').value = '';
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            showAdminLogin();
+            
+            // Clear all admin forms
+            document.getElementById('adminUsername').value = '';
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('heroTitle').value = adminSettings.heroTitle;
+            document.getElementById('heroTagline').value = adminSettings.heroTagline;
+            document.getElementById('heroSubtitle').value = adminSettings.heroSubtitle;
+            
+            alert('You have been logged out successfully.');
+        }
+
+
+        function updateHeroContent() {
+            if (!isAdminLoggedIn) {
+                alert('Please login first to access admin functions.');
+                return;
+            }
+            
+            const title = document.getElementById('heroTitle').value;
+            const tagline = document.getElementById('heroTagline').value;
+            const subtitle = document.getElementById('heroSubtitle').value;
+            
+            // Update the actual hero section
+            document.querySelector('.hero h1').textContent = title;
+            document.querySelector('.hero .tagline').textContent = tagline;
+            document.querySelector('.hero .subtitle').textContent = subtitle;
+            
+            // Update settings
+            adminSettings.heroTitle = title;
+            adminSettings.heroTagline = tagline;
+            adminSettings.heroSubtitle = subtitle;
+            
+            alert('Hero content updated successfully!');
+        }
+
+        function addServiceCard() {
+            if (!isAdminLoggedIn) {
+                alert('Please login first to access admin functions.');
+                return;
+            }
+            
+            const title = document.getElementById('serviceTitle').value;
+            const icon = document.getElementById('serviceIcon').value;
+            const description = document.getElementById('serviceDescription').value;
+            
+            if (!title || !icon || !description) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const servicesGrid = document.querySelector('#services .cards-grid');
+            const newCard = document.createElement('div');
+            newCard.className = 'card';
+            newCard.innerHTML = `
+                <div class="card-icon"><i class="${icon}"></i></div>
+                <h3>${title}</h3>
+                <p>${description}</p>
+            `;
+            
+            servicesGrid.appendChild(newCard);
+            
+            // Clear form
+            document.getElementById('serviceTitle').value = '';
+            document.getElementById('serviceIcon').value = '';
+            document.getElementById('serviceDescription').value = '';
+            
+            alert('Service card added successfully!');
+        }
+
+        function addIndustryDemo() {
+            if (!isAdminLoggedIn) {
+                alert('Please login first to access admin functions.');
+                return;
+            }
+            
+            const name = document.getElementById('industryName').value;
+            const icon = document.getElementById('industryIcon').value;
+            const description = document.getElementById('industryDescription').value;
+            
+            if (!name || !icon || !description) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            const demoGrid = document.querySelector('#demo .cards-grid');
+            const industryId = name.toLowerCase().replace(/\s+/g, '');
+            
+            const newCard = document.createElement('div');
+            newCard.className = 'card demo-card';
+            newCard.onclick = () => showDemo(industryId);
+            newCard.innerHTML = `
+                <div class="card-icon"><i class="${icon}"></i></div>
+                <h3>${name}</h3>
+                <p>${description}</p>
+            `;
+            
+            demoGrid.appendChild(newCard);
+            
+            // Create a basic demo dashboard
+            const demoContent = document.querySelector('.demo-content');
+            const newDashboard = document.createElement('div');
+            newDashboard.id = `demo-${industryId}`;
+            newDashboard.className = 'demo-dashboard';
+            newDashboard.innerHTML = `
+                <div class="dashboard-widget">
+                    <div class="widget-title">
+                        <i class="${icon}"></i>
+                        ${name} Analytics
+                    </div>
+                    <div class="map-placeholder">
+                        <i class="fas fa-map"></i> Custom ${name} Dashboard
+                    </div>
+                    <div class="metric-row">
+                        <span>Active Customers</span>
+                        <span class="metric-value">Loading...</span>
+                    </div>
+                </div>
+            `;
+            
+            demoContent.appendChild(newDashboard);
+            
+            // Clear form
+            document.getElementById('industryName').value = '';
+            document.getElementById('industryIcon').value = '';
+            document.getElementById('industryDescription').value = '';
+            
+            alert('Industry demo added successfully!');
+        }
+
+        function updateSettings() {
+            if (!isAdminLoggedIn) {
+                alert('Please login first to access admin functions.');
+                return;
+            }
+            
+            const ga = document.getElementById('googleAnalytics').value;
+            const email = document.getElementById('emailIntegration').value;
+            
+            adminSettings.googleAnalytics = ga;
+            adminSettings.emailIntegration = email;
+            
+            alert('Settings updated successfully!');
+        }
+
+        function exportContacts() {
+            if (!isAdminLoggedIn) {
+                alert('Please login first to access admin functions.');
+                return;
+            }
+            
+            if (contactSubmissions.length === 0) {
+                alert('No contact submissions to export');
+                return;
+            }
+            
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Name,Email,Business,CRM,Message,Date\n"
+                + contactSubmissions.map(contact => 
+                    `"${contact.name}","${contact.email}","${contact.business}","${contact.crm}","${contact.message}","${contact.date}"`
+                ).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "contact_submissions.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function displayContactSubmissions() {
+            const container = document.getElementById('contactSubmissions');
+            
+            if (contactSubmissions.length === 0) {
+                container.innerHTML = '<p style="color: #ccc;">No submissions yet</p>';
+                return;
+            }
+            
+            container.innerHTML = contactSubmissions.map(contact => `
+                <div style="border-bottom: 1px solid #444; padding: 0.5rem 0; margin-bottom: 0.5rem;">
+                    <strong>${contact.name}</strong> (${contact.email})<br>
+                    <small style="color: #ccc;">${contact.business} - ${contact.date}</small><br>
+                    <small>${contact.message.substring(0, 100)}...</small>
+                </div>
+            `).join('');
+        }
+
+        // Enhanced mobile detection and responsive handling
+        function initResponsiveHandling() {
+            function updateLayout() {
+                const isMobile = window.innerWidth <= 768;
+                const demoPanel = document.querySelector('.demo-panel');
+                const mainContent = document.querySelector('.main-content');
+                
+                if (isMobile) {
+                    demoPanel.style.display = 'none';
+                    mainContent.style.flex = '1';
+                    // Add mobile demo button
+                    if (!document.getElementById('mobileDemoBtn')) {
+                        addMobileDemoButton();
+                    }
+                } else {
+                    demoPanel.style.display = 'block';
+                    mainContent.style.flex = '2';
+                    removeMobileDemoButton();
+                }
+            }
+            
+            window.addEventListener('resize', updateLayout);
+            updateLayout();
+        }
+
+        // Mobile demo modal functionality
+        function addMobileDemoButton() {
+            if (document.getElementById('mobileDemoBtn')) return;
+            
+            const demoSection = document.getElementById('demo');
+            const mobileBtn = document.createElement('div');
+            mobileBtn.id = 'mobileDemoBtn';
+            mobileBtn.innerHTML = `
+                <button class="cta-button" onclick="showMobileDemo()" style="margin-top: 2rem; display: block; margin-left: auto; margin-right: auto;">
+                    <i class="fas fa-chart-bar"></i> View Demo Dashboard
+                </button>
+                <div id="mobileDemo" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; overflow-y: auto;">
+                    <div style="background: #f8f9fa; min-height: 100%; padding: 1rem;">
+                        <button onclick="closeMobileDemo()" style="position: absolute; top: 1rem; right: 1rem; background: #B3242B; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">×</button>
+                        <div id="mobileDemoContent"></div>
+                    </div>
+                </div>
+            `;
+            demoSection.appendChild(mobileBtn);
+        }
+
+        function showMobileDemo() {
+            const mobileDemo = document.getElementById('mobileDemo');
+            const mobileDemoContent = document.getElementById('mobileDemoContent');
+            const currentDemoContent = document.querySelector('.demo-dashboard.active');
+            
+            if (currentDemoContent) {
+                mobileDemoContent.innerHTML = `
+                    <h2 style="text-align: center; color: #1A2A46; margin-bottom: 2rem;">
+                        ${document.getElementById('demoTitle').textContent}
+                    </h2>
+                    ${currentDemoContent.innerHTML}
+                `;
+            } else {
+                mobileDemoContent.innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <h3>Select an Industry Demo</h3>
+                        <p>Please click on an industry card first to load the demo</p>
+                    </div>
+                `;
+            }
+            
+            mobileDemo.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileDemo() {
+            document.getElementById('mobileDemo').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function removeMobileDemoButton() {
+            const btn = document.getElementById('mobileDemoBtn');
+            if (btn) btn.remove();
+        }
+
+        // Enhanced analytics simulation with more realistic data
+        function enhancedAnalyticsSimulation() {
+            const analyticsData = {
+                landscaping: {
+                    customers: 1247,
+                    revenue: 125000,
+                    calls: 89
+                },
+                hvac: {
+                    customers: 892,
+                    revenue: 180000,
+                    calls: 156
+                },
+                coffee: {
+                    customers: 2340,
+                    revenue: 95000,
+                    calls: 23
+                },
+                sports: {
+                    customers: 567,
+                    revenue: 45000,
+                    calls: 12
+                }
+            };
+            
+            setInterval(() => {
+                Object.keys(analyticsData).forEach(industry => {
+                    // Simulate small fluctuations in data
+                    analyticsData[industry].customers += Math.floor(Math.random() * 10) - 5;
+                    analyticsData[industry].revenue += Math.floor(Math.random() * 1000) - 500;
+                    analyticsData[industry].calls += Math.floor(Math.random() * 3) - 1;
+                    
+                    // Update UI if demo is active
+                    const activeDemo = document.querySelector(`#demo-${industry}.demo-dashboard.active`);
+                    if (activeDemo) {
+                        const customerMetric = activeDemo.querySelector('.metric-row .metric-value');
+                        if (customerMetric && customerMetric.textContent.includes(',')) {
+                            customerMetric.textContent = analyticsData[industry].customers.toLocaleString();
+                        }
+                    }
+                });
+            }, 15000); // Update every 15 seconds for more realistic feel
+        }
+
+        // Enhanced contact form with validation and better UX
+        function enhanceContactForm() {
+            const form = document.getElementById('contactForm');
+            
+            // Add real-time validation
+            const inputs = form.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.classList.contains('error')) {
+                        validateField(this);
+                    }
+                });
+            });
+            
+            function validateField(field) {
+                const errorDiv = field.parentNode.querySelector('.field-error');
+                if (errorDiv) errorDiv.remove();
+                
+                field.classList.remove('error');
+                
+                let isValid = true;
+                let errorMessage = '';
+                
+                if (field.required && !field.value.trim()) {
+                    isValid = false;
+                    errorMessage = 'This field is required';
+                } else if (field.type === 'email' && field.value) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(field.value)) {
+                        isValid = false;
+                        errorMessage = 'Please enter a valid email address';
+                    }
+                }
+                
+                if (!isValid) {
+                    field.classList.add('error');
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'field-error';
+                    errorDiv.style.color = '#B3242B';
+                    errorDiv.style.fontSize = '0.875rem';
+                    errorDiv.style.marginTop = '0.25rem';
+                    errorDiv.textContent = errorMessage;
+                    field.parentNode.appendChild(errorDiv);
+                }
+                
+                return isValid;
+            }
+            
+            // Enhanced submit handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let allValid = true;
+                inputs.forEach(input => {
+                    if (!validateField(input)) {
+                        allValid = false;
+                    }
+                });
+                
+                if (!allValid) {
+                    alert('Please correct the errors before submitting');
+                    return;
+                }
+                
+                // Show loading state
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                // Simulate form submission delay
+                setTimeout(() => {
+                    const formData = new FormData(form);
+                    const contactData = {
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        business: formData.get('business'),
+                        crm: formData.get('crm'),
+                        message: formData.get('message'),
+                        date: new Date().toLocaleString(),
+                        source: 'Website Contact Form'
+                    };
+                    
+                    contactSubmissions.push(contactData);
+                    displayContactSubmissions();
+                    
+                    // Show success message with better UX
+                    showSuccessMessage();
+                    
+                    // Reset form and button
+                    form.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 1500);
+            });
+        }
+
+        function showSuccessMessage() {
+            const successDiv = document.createElement('div');
+            successDiv.innerHTML = `
+                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                            background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                            z-index: 4000; text-align: center; max-width: 400px;">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 1rem;"></i>
+                    <h3 style="color: #1A2A46; margin-bottom: 1rem;">Thank You!</h3>
+                    <p style="margin-bottom: 2rem;">Your consultation request has been received. We'll contact you within 24 hours to schedule your free GIS analysis.</p>
+                    <button onclick="this.parentElement.parentElement.remove(); document.body.style.overflow = 'auto';" 
+                            class="cta-button">Close</button>
+                </div>
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 3999;"></div>
+            `;
+            document.body.appendChild(successDiv);
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Enhanced admin functionality with better data management
+        function enhanceAdminPanel() {
+            // Add export functionality for analytics
+            const adminContent = document.querySelector('.admin-content');
+            
+            const analyticsSection = document.createElement('div');
+            analyticsSection.className = 'admin-section';
+            analyticsSection.innerHTML = `
+                <h3>Analytics Dashboard</h3>
+                <div class="metric-row">
+                    <span>Total Visitors Today</span>
+                    <span class="metric-value" id="visitorsToday">0</span>
+                </div>
+                <div class="metric-row">
+                    <span>Demo Interactions</span>
+                    <span class="metric-value" id="demoInteractions">0</span>
+                </div>
+                <div class="metric-row">
+                    <span>Contact Forms</span>
+                    <span class="metric-value" id="contactForms">${contactSubmissions.length}</span>
+                </div>
+                <button class="admin-button" onclick="exportAnalytics()">Export Analytics Report</button>
+            `;
+            
+            adminContent.insertBefore(analyticsSection, adminContent.lastElementChild);
+        }
+
+        function exportAnalytics() {
+            const analyticsData = {
+                date: new Date().toISOString(),
+                totalContacts: contactSubmissions.length,
+                demoInteractions: localStorage.getItem('demoInteractions') || 0,
+                visitorsToday: localStorage.getItem('visitorsToday') || 0,
+                contactSubmissions: contactSubmissions
+            };
+            
+            const jsonData = JSON.stringify(analyticsData, null, 2);
+            const blob = new Blob([jsonData], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `geoinsight_analytics_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Alt + A for admin panel
+            if (e.altKey && e.key === 'a') {
+                e.preventDefault();
+                toggleAdmin();
+            }
+            
+            // Alt + 1-5 for navigation
+            if (e.altKey && e.key >= '1' && e.key <= '5') {
+                e.preventDefault();
+                const sections = ['home', 'about', 'services', 'demo', 'contact'];
+                showSection(sections[parseInt(e.key) - 1]);
+            }
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize all functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize admin settings in form
+            document.getElementById('heroTitle').value = adminSettings.heroTitle;
+            document.getElementById('heroTagline').value = adminSettings.heroTagline;
+            document.getElementById('heroSubtitle').value = adminSettings.heroSubtitle;
+            
+            // Initialize new enhancements
+            initResponsiveHandling();
+            enhanceContactForm();
+            enhanceAdminPanel();
+            enhancedAnalyticsSimulation();
+            
+            // Track page visit
+            let visits = parseInt(localStorage.getItem('visitorsToday') || '0');
+            visits++;
+            localStorage.setItem('visitorsToday', visits.toString());
+            
+            // Update visitor count in admin panel
+            const visitorCounter = document.getElementById('visitorsToday');
+            if (visitorCounter) {
+                visitorCounter.textContent = visits;
+            }
+        });
+
+        // Add CSS for enhanced form validation
+        const enhancedStyles = document.createElement('style');
+        enhancedStyles.textContent = `
+            .contact-form input.error,
+            .contact-form textarea.error {
+                border-color: #B3242B !important;
+                background-color: #fff5f5 !important;
+            }
+            
+            .field-error {
+                animation: slideIn 0.3s ease-out;
+            }
+            
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* Loading spinner styles */
+            .loading-spinner {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #B3242B;
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            .fa-spin {
+                animation: spin 1s linear infinite;
+            }
+            
+            /* Enhanced mobile styles */
+            @media (max-width: 768px) {
+                .demo-panel {
+                    position: fixed !important;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 2000;
+                }
+                
+                .cards-grid {
+                    grid-template-columns: 1fr;
+                    gap: 1rem;
+                }
+                
+                .hero h1 {
+                    font-size: 2rem;
+                }
+                
+                .hero .tagline {
+                    font-size: 1.2rem;
+                }
+            }
+        `;
+
+        document.head.appendChild(enhancedStyles);
+    </script>
+</body>
+</html>
