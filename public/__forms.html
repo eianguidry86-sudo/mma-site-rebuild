@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Netlify form detection</title>
+  </head>
+  <body>
+    <!--
+      This file exists only so Netlify's build-time form parser can register
+      the contact form. The real form lives in components/contact/ContactClient.tsx
+      and is rendered by React. Netlify cannot detect JS-rendered forms, so the
+      field list below must stay in sync with that component.
+      This page is never linked from the site.
+    -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input name="bot-field" />
+      <input type="text" name="fullName" />
+      <input type="email" name="emailAddress" />
+      <input type="text" name="businessName" />
+      <input type="text" name="crmSystem" />
+      <textarea name="challenges"></textarea>
+    </form>
+  </body>
+</html>

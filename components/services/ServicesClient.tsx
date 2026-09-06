@@ -1,6 +1,5 @@
-"use client";
-
 import React from 'react';
+import Link from 'next/link';
 
 export default function ServicesClient() {
   return (
@@ -16,7 +15,7 @@ export default function ServicesClient() {
       {/* Left Column: Services Canvas */}
       <section className="flex-1 flex flex-col gap-8 w-full lg:w-2/3">
         <div className="text-center lg:text-left mb-4">
-          <h1 className="text-display-lg font-display-lg text-primary mb-2">Our Services</h1>
+          <h1 className="text-display-lg font-display-lg text-on-surface mb-2">Our services</h1>
           <p className="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">Advanced spatial intelligence solutions designed to accelerate growth and optimize market positioning.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -71,10 +70,13 @@ export default function ServicesClient() {
           <div className="flex flex-col gap-4">
             <h3 className="text-headline-md font-headline-md text-on-surface mb-2 [text-shadow:_0_1px_2px_rgb(255_255_255_/_40%)]">Experience Spatial Intelligence</h3>
             <p className="text-body-md text-on-surface-variant mb-6 [text-shadow:_0_1px_1px_rgb(255_255_255_/_30%)]">Unlock deep market insights with our high-fidelity spatial analytics engine.</p>
-            <button className="w-full py-4 bg-gradient-to-b from-secondary to-[#DC2626] text-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 font-label-md font-semibold flex items-center justify-center gap-2 active:scale-95">
-              Request Full Demo
+            <Link
+              href="/demo"
+              className="w-full py-4 bg-secondary hover:bg-[#93000b] text-white rounded-lg shadow-[0_4px_14px_0_rgba(187,1,18,0.39)] hover:shadow-[0_6px_20px_rgba(187,1,18,0.5)] transition-all duration-300 font-label-md font-semibold flex items-center justify-center gap-2 active:scale-95"
+            >
+              See the live demo
               <span className="material-symbols-outlined text-sm">arrow_forward</span>
-            </button>
+            </Link>
           </div>
         </div>
       </aside>

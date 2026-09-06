@@ -19,7 +19,7 @@
   --color-primary-fixed-dim: #bec6e0;
   --color-on-secondary-fixed: #410002;
   --color-surface-bright: #f8f9ff;
-  --color-primary: #000000;
+  --color-primary: #0b1c30;
   --color-on-error-container: #93000a;
   --color-on-background: #0b1c30;
   --color-inverse-surface: #213145;
@@ -27,7 +27,7 @@
   --color-secondary-container: #e02928;
   --color-surface-container-low: #eff4ff;
   --color-primary-fixed: #dae2fd;
-  --color-tertiary: #000000;
+  --color-tertiary: #0b1c30;
   --color-on-tertiary-container: #00938e;
   --color-inverse-on-surface: #eaf1ff;
   --color-on-tertiary-fixed: #00201e;
@@ -49,8 +49,8 @@
   --color-secondary-fixed-dim: #ffb4ab;
   --color-primary-container: #131b2e;
   --color-midnight-navy: #0F172A;
-  --color-ruby-red: #EF4444;
-  --color-ruby-red-dark: #DC2626;
+  --color-ruby-red: #bb0112;
+  --color-ruby-red-dark: #93000b;
 
   --radius-DEFAULT: 0.25rem;
   --radius-lg: 0.5rem;
@@ -147,20 +147,20 @@
   transition: all 0.2s ease;
 }
 .soft-ui-input:focus {
-  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 0 0 2px rgba(239, 68, 68, 0.2);
-  border-color: #EF4444;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.04), 0 0 0 2px rgba(187, 1, 18, 0.2);
+  border-color: #bb0112;
   outline: none;
 }
 
 .btn-primary {
-  background: linear-gradient(180deg, #EF4444 0%, #DC2626 100%);
-  box-shadow: 0 4px 14px 0 rgba(239, 68, 68, 0.39);
+  background: #bb0112;
+  box-shadow: 0 4px 14px 0 rgba(187, 1, 18, 0.39);
   transition: all 0.2s ease;
 }
 .btn-primary:hover {
-  box-shadow: 0 6px 20px 0 rgba(239, 68, 68, 0.5);
+  box-shadow: 0 6px 20px 0 rgba(187, 1, 18, 0.5);
   transform: translateY(-1px);
-  filter: brightness(1.05);
+  background: #93000b;
 }
 
 .btn-secondary {
@@ -174,5 +174,19 @@
 }
 
 .map-heatmap-point {
-  background: radial-gradient(circle, rgba(239,68,68,0.8) 0%, rgba(239,68,68,0.2) 50%, rgba(255,255,255,0) 100%);
+  background: radial-gradient(circle, rgba(187,1,18,0.8) 0%, rgba(187,1,18,0.2) 50%, rgba(255,255,255,0) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .soft-ui-card:hover {
+    transform: none;
+  }
 }
