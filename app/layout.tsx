@@ -1,10 +1,20 @@
 import type { Metadata } from "next";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 import Navigation from "@/components/shared/Navigation";
 import "./globals.css";
 
-const inter = { variable: "--font-inter" };
-const plusJakartaSans = { variable: "--font-plus-jakarta-sans" };
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const SITE_URL = "https://mellow-fenglisu-7e6b1c.netlify.app";
 
