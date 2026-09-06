@@ -1,18 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
 import Navigation from "@/components/shared/Navigation";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
-  subsets: ["latin"],
-});
+const inter = { variable: "--font-inter" };
+const plusJakartaSans = { variable: "--font-plus-jakarta-sans" };
 
 const SITE_URL = "https://mellow-fenglisu-7e6b1c.netlify.app";
 
@@ -50,18 +42,6 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${plusJakartaSans.variable} scroll-smooth`}
     >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-          rel="stylesheet"
-        />
-      </head>
       <body className="bg-background text-on-background font-body-md min-h-screen flex flex-col antialiased selection:bg-secondary selection:text-white">
         <a
           href="#main-content"
@@ -83,7 +63,7 @@ export default function RootLayout({
                 height={32}
                 className="w-8 h-8 object-contain"
               />
-              <span className="text-headline-md font-headline-md font-bold tracking-tight text-on-surface whitespace-nowrap">
+              <span className="text-[17px] sm:text-headline-md font-headline-md font-bold tracking-tight text-on-surface whitespace-nowrap">
                 MarketMap Analytics
               </span>
             </Link>

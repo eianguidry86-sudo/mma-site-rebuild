@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
+import { ButtonLink } from "@/components/shared/Button";
+import Icon from "@/components/shared/Icon";
 
 type Industry = {
   id: string;
@@ -157,8 +158,8 @@ export default function DemoClient() {
                   onClick={() => selectIndustry(industry.id)}
                   className={`soft-ui-card rounded-xl p-6 text-left cursor-pointer transition-transform hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary ${
                     isActive
-                      ? "border-secondary shadow-[inset_0_2px_0_0_rgba(255,255,255,0.8),_0_12px_48px_0_rgba(187,1,18,0.12)]"
-                      : ""
+                      ? "ring-2 ring-secondary border-secondary shadow-[0_12px_48px_0_rgba(187,1,18,0.14)]"
+                      : "hover:border-outline"
                   }`}
                 >
                   <img
@@ -183,18 +184,13 @@ export default function DemoClient() {
               Want this built from your own data?
             </h2>
             <p className="text-body-md font-body-md text-on-surface-variant mb-5">
-              Send us your customer list and we&apos;ll map it. No credit card,
-              no software to install.
+              Send us your customer list and we&apos;ll map it. No software to
+              install.
             </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3 rounded-lg bg-secondary hover:bg-[#93000b] text-white text-label-md font-label-md font-bold transition-all shadow-[0_4px_14px_0_rgba(187,1,18,0.39)] hover:shadow-[0_6px_20px_rgba(187,1,18,0.5)] hover:-translate-y-px"
-            >
-              Get your free map
-              <span className="material-symbols-outlined text-[18px]">
-                arrow_forward
-              </span>
-            </Link>
+            <ButtonLink href="/contact" size="lg">
+              Book a consultation
+<Icon name="arrowRight" size={18} />
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -206,7 +202,7 @@ export default function DemoClient() {
         aria-label={`${active.name} dashboard`}
         className="w-full md:w-1/2 bg-surface-container-low border-t md:border-t-0 md:border-l border-outline-variant/30 flex flex-col relative"
       >
-        <div className="bg-primary-container text-on-primary-fixed py-4 px-6 border-b border-white/10 flex justify-center items-center shrink-0 md:sticky md:top-[72px] z-10">
+        <div className="bg-midnight-navy text-white py-4 px-6 border-b border-white/10 flex justify-center items-center shrink-0 md:sticky md:top-[72px] z-10">
           <h2 className="text-label-md font-label-md font-bold tracking-wide">
             {active.name} dashboard
           </h2>
@@ -216,7 +212,7 @@ export default function DemoClient() {
           {/* Map widget */}
           <div className="soft-ui-card rounded-xl p-6 flex flex-col gap-4">
             <div className="flex items-center gap-2 text-on-surface">
-              <span className="material-symbols-outlined">map</span>
+<Icon name="map" size={22} className="text-secondary" />
               <h3 className="text-headline-md font-headline-md text-on-surface">
                 Customer distribution map
               </h3>
@@ -270,7 +266,7 @@ export default function DemoClient() {
           {/* Chart widget */}
           <div className="soft-ui-card rounded-xl p-6 flex flex-col gap-4">
             <div className="flex items-center gap-2 text-on-surface">
-              <span className="material-symbols-outlined">bar_chart</span>
+<Icon name="barChart" size={22} className="text-secondary" />
               <h3 className="text-headline-md font-headline-md text-on-surface">
                 {active.chartLabel}
               </h3>

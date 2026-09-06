@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { Button } from "@/components/shared/Button";
+import Icon from "@/components/shared/Icon";
 
 const FIELD_CLASS =
   "w-full bg-[#0b1c30]/50 border border-white/20 rounded-lg px-4 py-3 text-body-md font-body-md text-white placeholder:text-white/40 focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/30 transition-colors";
@@ -48,7 +50,7 @@ export default function ContactClient() {
         <div className="w-full max-w-3xl ml-0 lg:ml-12">
           <div className="mb-10">
             <h1 className="text-display-lg font-display-lg text-white mb-4 drop-shadow-md">
-              Get Started Today
+              Get started today
             </h1>
             <p className="text-body-lg font-body-lg text-primary-fixed-dim">
               Tell us about your business and we&apos;ll show you what your
@@ -60,12 +62,7 @@ export default function ContactClient() {
           <div className="rounded-2xl p-8 lg:p-10 bg-[#0b1c30]/40 backdrop-blur-md border border-white/10 shadow-2xl">
             {status === "sent" ? (
               <div className="py-8 text-center">
-                <span
-                  className="material-symbols-outlined text-5xl text-secondary mb-4 block"
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  check_circle
-                </span>
+<Icon name="checkCircle" size={48} className="text-secondary mb-4 mx-auto block" />
                 <h2 className="text-headline-md font-headline-md text-white mb-2">
                   Your inquiry is on its way
                 </h2>
@@ -201,20 +198,38 @@ export default function ContactClient() {
                 )}
 
                 <div className="pt-4">
-                  <button
-                    className="w-full md:w-auto px-8 py-4 rounded-lg bg-secondary hover:bg-[#93000b] disabled:opacity-60 disabled:cursor-not-allowed text-white text-label-md font-label-md font-bold flex items-center justify-center gap-2 transition-all shadow-[0_4px_14px_0_rgba(187,1,18,0.39)] hover:shadow-[0_6px_20px_rgba(187,1,18,0.5)] transform hover:-translate-y-px disabled:transform-none"
+                  <Button
                     type="submit"
+                    size="lg"
+                    className="w-full md:w-auto"
                     disabled={status === "sending"}
                   >
                     {status === "sending" ? "Sending…" : "Send inquiry"}
-                    <span className="material-symbols-outlined text-sm">
-                      {status === "sending" ? "hourglass_top" : "send"}
-                    </span>
-                  </button>
+<Icon
+                      name={status === "sending" ? "spinner" : "send"}
+                      size={16}
+                      className={status === "sending" ? "animate-spin" : ""}
+                    />
+                  </Button>
                 </div>
               </form>
             )}
           </div>
+
+            <ul className="mt-8 flex flex-col sm:flex-row gap-4 sm:gap-8 text-white/70 text-label-sm font-label-sm">
+              <li className="flex items-center gap-2">
+                <Icon name="check" size={16} className="text-white/40" />
+                We reply within one business day
+              </li>
+              <li className="flex items-center gap-2">
+                <Icon name="check" size={16} className="text-white/40" />
+                No obligation and no sales sequence
+              </li>
+              <li className="flex items-center gap-2">
+                <Icon name="check" size={16} className="text-white/40" />
+                Your data stays yours
+              </li>
+            </ul>
         </div>
       </div>
     </div>

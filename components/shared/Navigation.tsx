@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Icon from "@/components/shared/Icon";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -64,9 +65,7 @@ export default function Navigation() {
         aria-controls="mobile-nav"
         className="md:hidden text-on-surface p-2 -mr-2 rounded-lg hover:bg-black/5 active:scale-95 transition-all duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary"
       >
-        <span className="material-symbols-outlined block">
-          {open ? "close" : "menu"}
-        </span>
+<Icon name={open ? "close" : "menu"} size={24} />
       </button>
 
       {/* Mobile menu panel */}
