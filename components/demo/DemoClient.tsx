@@ -7,7 +7,7 @@ import Icon from "@/components/shared/Icon";
 type Industry = {
   id: string;
   name: string;
-  icon: string;
+  icon: "pin" | "radar" | "storefront" | "groups";
   blurb: string;
   mapImage: string;
   layers: [string, string, string];
@@ -21,11 +21,10 @@ const INDUSTRIES: Industry[] = [
   {
     id: "landscaping",
     name: "Landscaping Services",
-    icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuB1FuiAfMXYycpwtBQd9ONKDCDobegtuv1vEcL42lEV8hmOi02QpkuGLj55-PVk1ILfmLMFmWCQ_5Rn1Tzm3oso4cDCM1cP-qJcfECVgR8189ve8V3f2fZ9X9AQH4BJjodeeclpRgAxx7EGed49M5TgAlElB_mufyf2YycJsxh-9xNXC4lh92awv8-9VY_nTmfYY-IgxFpZglw6VfsOyHJhF0ApRrL0wG6Kj8LDxF85dEY0LC4CqxqLZg",
+    icon: "pin" as const,
     blurb:
       "Seasonal demand mapping, property value correlation, and service area optimization for landscaping businesses.",
-    mapImage:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAkAzUA7VykixeNcnz6HfeXCaNQRBJoXzdZJeLNYWnSWUDov7tjCEmUrgkmK0moWDW6259Lx_FUd4U6sKxIltbzsbhEnx0HYVvk8h9VDHKXcEnUAPVRYVs_yYf9uc6APXUdukGzJuRAvyLBOLnw3SCjM9snBvsP6cX6jUknR3aNlpGza1K4KOBi6aZC_-TvRjxSzc3hoZkUE16_rG9N_OfEMGQi7b0q1i80cda8itCjYN7ycIH58BkZ3g",
+    mapImage: "/img/map-landscaping.svg",
     layers: ["Customer density", "Property values", "Seasonal demand"],
     kpis: [
       ["Active customers", "1,242"],
@@ -45,11 +44,10 @@ const INDUSTRIES: Industry[] = [
   {
     id: "hvac",
     name: "HVAC Services",
-    icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuBIBVNbvyAYeCv3avTMEyVXef5t0zWH0fpzGLgYnw3RDXvSePS-bE5yNnRjfues6nQqjz3arDvstL4eSEbjBd6d5zOYw1UMZKesu4m9wej7sxX_cw89iD0I1VWrSWv7Czwwc3N3088IDmn5fbVIjLevUKkn5CBooFlARf1VWKQjGLqH3FcUHpEo52rXWpXxGD8PaF1MS0kUrfxhlImeYpLwvtdNFEwTBh43YBx8i6uheZmfseFfE3AZ4Q",
+    icon: "radar" as const,
     blurb:
       "Climate zone analysis, emergency service mapping, and residential density targeting for HVAC companies.",
-    mapImage:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAkAzUA7VykixeNcnz6HfeXCaNQRBJoXzdZJeLNYWnSWUDov7tjCEmUrgkmK0moWDW6259Lx_FUd4U6sKxIltbzsbhEnx0HYVvk8h9VDHKXcEnUAPVRYVs_yYf9uc6APXUdukGzJuRAvyLBOLnw3SCjM9snBvsP6cX6jUknR3aNlpGza1K4KOBi6aZC_-TvRjxSzc3hoZkUE16_rG9N_OfEMGQi7b0q1i80cda8itCjYN7ycIH58BkZ3g",
+    mapImage: "/img/map-hvac.svg",
     layers: ["Service calls", "Home age", "Emergency response"],
     kpis: [
       ["Active accounts", "2,870"],
@@ -69,11 +67,10 @@ const INDUSTRIES: Industry[] = [
   {
     id: "coffee",
     name: "Coffee Shop",
-    icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuCdXFXsYuFVu6XBMMGuwevoAzFgwVengDj58-dMqQitDFAViruzdLKH3xckjRnVCpYD7W0klOI4Xb3ADrW_Rxt8_bBG32txjPH3B-ZGr1NeOXgW3SIaOYYBdNvFmw5Sz62rfnh97Eki2U9681G4_Ki2aEBx2R-za6tI1fnBF6nh5iJn57DZwe_l_eGIgtHlLkpokFqLM8sqM0BqZeqRzppgkbLvmXP0-2ChpiRnjnCmNI6ec6nYu8nVPA",
+    icon: "storefront" as const,
     blurb:
       "Foot traffic analysis, competitor proximity mapping, and demographic targeting for retail coffee.",
-    mapImage:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAkAzUA7VykixeNcnz6HfeXCaNQRBJoXzdZJeLNYWnSWUDov7tjCEmUrgkmK0moWDW6259Lx_FUd4U6sKxIltbzsbhEnx0HYVvk8h9VDHKXcEnUAPVRYVs_yYf9uc6APXUdukGzJuRAvyLBOLnw3SCjM9snBvsP6cX6jUknR3aNlpGza1K4KOBi6aZC_-TvRjxSzc3hoZkUE16_rG9N_OfEMGQi7b0q1i80cda8itCjYN7ycIH58BkZ3g",
+    mapImage: "/img/map-coffee.svg",
     layers: ["Foot traffic", "Competitors", "Daytime population"],
     kpis: [
       ["Daily transactions", "684"],
@@ -93,11 +90,10 @@ const INDUSTRIES: Industry[] = [
   {
     id: "youth-sports",
     name: "Youth Sports",
-    icon: "https://lh3.googleusercontent.com/aida-public/AB6AXuCjtviHzZBflKl4Tjt0UyfLZ_oWm9woWTUD1S-YoSC1zvfvqWIBcUfnBQNkIbS8pI02NdGevezb3hr7r_IlzcZvid53ir-gZQH8gBI_-R8pSTYReP35mJW7SJNVtLSUIdhts_WWmf0YFCIavvQFTLcDgN5AHbQDL1wSfFxNg6pMgYd155fxB97l1BcnnNnl-PPBLALfQwA1IFXimg0weKxndf_0hZOcezFn_8_ZC8nq89X9-gMBNZeAVQ",
+    icon: "groups" as const,
     blurb:
       "Family demographic targeting, facility accessibility analysis, and program expansion opportunities.",
-    mapImage:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAkAzUA7VykixeNcnz6HfeXCaNQRBJoXzdZJeLNYWnSWUDov7tjCEmUrgkmK0moWDW6259Lx_FUd4U6sKxIltbzsbhEnx0HYVvk8h9VDHKXcEnUAPVRYVs_yYf9uc6APXUdukGzJuRAvyLBOLnw3SCjM9snBvsP6cX6jUknR3aNlpGza1K4KOBi6aZC_-TvRjxSzc3hoZkUE16_rG9N_OfEMGQi7b0q1i80cda8itCjYN7ycIH58BkZ3g",
+    mapImage: "/img/map-youth-sports.svg",
     layers: ["Family density", "Drive time", "Program gaps"],
     kpis: [
       ["Enrolled athletes", "418"],
@@ -162,11 +158,9 @@ export default function DemoClient() {
                       : "hover:border-outline"
                   }`}
                 >
-                  <img
-                    src={industry.icon}
-                    alt=""
-                    className="w-12 h-12 mb-4 block object-contain"
-                  />
+                  <div className="w-12 h-12 mb-4 rounded-lg bg-surface-container-highest flex items-center justify-center">
+                    <Icon name={industry.icon} size={24} className="text-secondary" />
+                  </div>
                   <h2 className="text-headline-md font-headline-md mb-2 text-on-surface">
                     {industry.name}
                   </h2>
@@ -221,8 +215,10 @@ export default function DemoClient() {
             <div className="relative w-full h-[300px] rounded-lg border border-outline-variant/50 overflow-hidden bg-primary-container">
               <img
                 src={active.mapImage}
-                alt={`${active.name} customer density heatmap`}
+                alt={`Customer density heatmap for a ${active.name.toLowerCase()} business`}
                 className="w-full h-full object-cover"
+                width={800}
+                height={600}
               />
               <div className="absolute top-4 left-4 right-4 flex flex-wrap gap-2 z-10">
                 {active.layers.map((layer, i) => (

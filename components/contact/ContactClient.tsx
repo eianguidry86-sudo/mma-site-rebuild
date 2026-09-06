@@ -39,8 +39,11 @@ export default function ContactClient() {
       <div className="absolute inset-0 z-0">
         <img
           alt=""
+          aria-hidden="true"
           className="w-full h-full object-cover object-right"
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnZzzg2hpreA-VDpJ8C8S-fSRQhyeyclNBK0V2E_5lvhrnMRbJfKeErpI2TkAG1djQKOApzR4nDUIvVfMsGOqmzVKL_GioOUHJkXvWg2IdlUGR-COSIGJ8SHDRBeaxucstOksqkt2yVH7NCdHhSCNoueYjV4OLQka3zUoCkt1X4nmPmr_899pWleiA4V8Ptr7HvuYerfErfa_AEUQunNWBB37hff-gxAfX0dkbIteqc_enkpvyORuGNw"
+          src="/img/backdrop-contact.svg"
+          width={1600}
+          height={900}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0b1c30] via-[#0b1c30]/80 to-transparent" />
       </div>

@@ -69,7 +69,7 @@ export default function HomeClient() {
       <section
         className="flex flex-col justify-center px-gutter py-20 md:py-28 relative bg-midnight-navy overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(15, 23, 42, 0.94) 20%, rgba(15, 23, 42, 0.5) 100%), url("https://lh3.googleusercontent.com/aida/AP1WRLuutwCx9t7BRAAVKk1QF0i4AgFtIIMDIESoaeGTGHYHYDzwrCDOBcV806lt3_ZJAkNKVbx07ByrjASLTRJFpOyXYCWxIBZyaDlt_u2y5pWNNE5rJSGc7iI1M_mXCUlqqK1gw-wY20V687iagO3Q0qbDaUdsov009-MzsC0ruackqEso_VMCN3jBE2pIJ8pWfQ0hP2mxEFd2-3bgQZqwsPAdpJ7hOxQPkEDhws7RAq9bg6TFqp-rSavBHtE")`,
+          backgroundImage: `linear-gradient(to right, rgba(15, 23, 42, 0.94) 20%, rgba(15, 23, 42, 0.5) 100%), url("/img/backdrop-hero.svg")`,
           backgroundSize: "cover",
           backgroundPosition: "right center",
         }}

@@ -53,9 +53,12 @@ export default function ServicesClient() {
         <div className="absolute inset-0 -z-10 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60 z-10" />
           <img
-            src="https://lh3.googleusercontent.com/aida/AP1WRLvovg4WAHxO5kzAdCWjXJy4r4IFQVx-ogQv8LY-mehc9itARaQH04dK7H-LMgAcf5JIqYkupr3FWbNxlyavPu0vG6HKFVOsWX5GMZyAGyV0YE6law7ET3GNT2lwBn9uINuaZLh7MjZ8slSVvDF_GKjnnIQ1LfuR_2X-w0ktcTyLTxGQX2OXavg6vs-F0xumqtM8zggiO6i0QHnEBX-NirCnQlzgkq5fMDthoFWHdNLph_BZz_6cgCKogHQu"
+            src="/img/backdrop-services.svg"
             className="w-full h-full object-cover opacity-30"
             alt=""
+            width={1600}
+            height={900}
+            aria-hidden="true"
           />
         </div>
 
