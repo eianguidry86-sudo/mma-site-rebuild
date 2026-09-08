@@ -69,7 +69,7 @@ export default function HomeClient() {
       <section
         className="flex flex-col justify-center px-gutter py-20 md:py-28 relative bg-midnight-navy overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(15, 23, 42, 0.94) 20%, rgba(15, 23, 42, 0.5) 100%), url("/img/backdrop-hero.svg")`,
+          backgroundImage: `linear-gradient(to right, rgba(15, 23, 42, 0.94) 20%, rgba(15, 23, 42, 0.5) 100%), url("/images/home-hero-map.png")`,
           backgroundSize: "cover",
           backgroundPosition: "right center",
         }}

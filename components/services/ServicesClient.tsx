@@ -1,10 +1,19 @@
 import React from "react";
 import { ButtonLink } from "@/components/shared/Button";
-import Icon from "@/components/shared/Icon";
+import Icon, { type IconName } from "@/components/shared/Icon";
 
-const SERVICES = [
+type Service = {
+  icon: IconName;
+  image?: string;
+  title: string;
+  body: string;
+  detail: string[];
+};
+
+const SERVICES: Service[] = [
   {
     icon: "map" as const,
+    image: "/images/icon-interactive-maps.png",
     title: "Interactive customer maps",
     body: "Visualize customer density and distribution patterns with dynamic maps that reveal opportunities hiding in your service area.",
     detail: [
@@ -15,6 +24,7 @@ const SERVICES = [
   },
   {
     icon: "groups" as const,
+    image: "/images/icon-demographic-targeting.png",
     title: "Demographic targeting",
     body: "Overlay income levels and household data to identify high-value customer segments and stop spending on the wrong neighborhoods.",
     detail: [
@@ -35,6 +45,7 @@ const SERVICES = [
   },
   {
     icon: "radar" as const,
+    image: "/images/icon-competitor-intel.png",
     title: "Competitor intelligence",
     body: "Map competitor locations and market positioning using public data sources to find the gaps they've left open.",
     detail: [
@@ -53,7 +64,7 @@ export default function ServicesClient() {
         <div className="absolute inset-0 -z-10 pointer-events-none">
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/60 z-10" />
           <img
-            src="/img/backdrop-services.svg"
+            src="/images/services-analytics-bg.png"
             className="w-full h-full object-cover opacity-30"
             alt=""
             width={1600}
@@ -85,7 +96,22 @@ export default function ServicesClient() {
                 className="soft-ui-card rounded-xl p-8 flex flex-col gap-4"
               >
                 <div className="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
-<Icon name={service.icon} size={24} className="text-secondary" />
+                  {service.image ? (
+                    <img
+                      src={service.image}
+                      alt=""
+                      aria-hidden="true"
+                      width={28}
+                      height={28}
+                      className="w-7 h-7 object-contain"
+                    />
+                  ) : (
+                    <Icon
+                      name={service.icon}
+                      size={24}
+                      className="text-on-surface"
+                    />
+                  )}
                 </div>
                 <h2 className="text-headline-md font-headline-md text-on-surface">
                   {service.title}
