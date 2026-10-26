@@ -1,0 +1,2 @@
+# vCards need CRLF line endings; store byte-for-byte
+*.vcf -text
